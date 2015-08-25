@@ -1,0 +1,46 @@
+@import "variables.scss";
+@import "mixins.scss";
+
+$sprite: '/img/SpriteSD.png';
+
+.message.error {
+    color: red;
+}
+
+.player-deck > .pair {
+    position: relative;
+    height: #{$tile_height}px;
+    width: #{$tile_width}px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+} 
+
+tile {
+    position: absolute;
+    overflow: hidden;
+
+    @include set-background($sprite);
+
+    @include unselectable();
+    
+    div.img-holder {
+        width: #{$tile_width}px;
+        height: #{$tile_height}px;
+    }
+}
+ 
+@include assign-tiles();
+
+.selected {
+    filter: brightness(50%);
+    -webkit-filter: brightness(50%);
+}
+
+.mismatch {
+    background: rgba(255,0,0, 0.5);
+    -moz-transition: background .3s linear;
+    -webkit-transition: background .3s linear;
+    -o-transition: background .3s linear;
+    transition: background .3s linear;
+}

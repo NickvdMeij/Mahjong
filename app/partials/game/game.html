@@ -1,0 +1,60 @@
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="well">
+			<h4 ng-show="game && game.id" id="forms">
+				<span ng-if="game.playable">Playing</span>
+				<span ng-if="game.waitingToStart">Waiting for</span>
+				<span ng-if="!game.playable && !game.waitingToStart">Watching</span>
+				game {{ game.id }}
+				<span ng-if="game.waitingToStart">to start</span>
+			</h4>
+			<h4 ng-show="!(game && game.id)">There is no game selected to play.</h4>
+			<h4 ng-show="game && game.id && game.state == 'finished'">This game has finished on {{ game.endedOn | date:"dd MMMM yyyy 'at' hh:mm a" }}</h4>
+		</div>
+	</div>          
+</div>
+
+<div ng-show="game && game.id" class="row">
+	<div class="col-md-8" style="display: flex;">
+
+		<div class="well">
+
+			<div id="gameboard" style="height: 500px; position: relative; width:670px;">
+				<tile 	ng-repeat="tile in game.getGrid() | matched: false"
+						class="{{ tile.tile.suit }}-{{ tile.tile.name }}"
+						id="{{tile.tile._id}}"
+						clickable
+						style="left: {{ (tile.xPos * 20) + (tile.zPos * 6) }}px; top: {{ (tile.yPos * 26) - (tile.zPos * 6) }}px; z-index: {{ tile.zPos }};"
+						ng-class="{'selected': tile.selected}">
+				</tile>
+			</div>
+
+			<div style="position: absolute; padding: 25px; margin: 10px; height: 450px; flex-grow: 1;">
+				<div>
+					<h1>Matched tiles</h1>
+					<div class="player-deck" style="position: relative;">
+						<div ng-repeat="pair in game.getMatchedPairs()" class="pair">
+							<tile class="{{ tile.tile.suit }}-{{ tile.tile.name }} deck" id="{{tile.tile._id}}" ng-repeat="tile in pair" style="left: {{ ($index%2==0) ? ($index/2) * 60 : ((((($index>0)?$index-1:0)) / 2) * 60) + 6 }}px; top: {{ ($index%2==0) ? 6 : 0 }}px; z-index: {{ ($index%2==0) ? 0 : 1 }};"></tile>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<button ng-show="showStart()" ng-click="startGame()" class="btn btn-success">Start</button>
+		<button ng-show="showJoin()" ng-click="joinGame()" class="btn btn-primary">Join</button>
+
+		<table class="table table-striped">
+			<tr>
+				<td>Name</td>
+				<td># tiles matched</td>
+			</tr>
+			<tr ng-repeat="player in game.players">
+				<td>{{ player.name }}</td>
+				<td>{{ player.numberOfMatches }}</td>
+			</tr>
+		</table>
+	</div>
+</div>

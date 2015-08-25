@@ -1,0 +1,64 @@
+<div class="row" ng-show="game.template">
+	<div class="col-lg-6 col-lg-offset-3">
+		<h2 class="text-center">Template design: {{test}}</h2>
+		<h3 ng-hide="game.template" class="text-center">First select a template to view the template design.</h3>
+	</div>
+	<div ng-show="game.template" class="col-sm-6 col-sm-offset-3" style="height: 500px; position: relative; width:670px;">
+		<tile ng-repeat="tile in game.template.tiles" style="left: {{ (tile.xPos * 20) + (tile.zPos * 6) }}px; top: {{ (tile.yPos * 26) - (tile.zPos * 6) }}px; z-index: {{ tile.zPos }};"></tile>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6 col-lg-offset-3">
+		<div class="well bs-component">
+		  <form name="newGameForm" class="form-horizontal" novalidate>
+			<fieldset>
+			  <div class="form-group">
+				<label for="template" class="col-lg-3 control-label">Template</label>
+				<div class="col-lg-9">
+				  <select name="template" ng-model="game.template" ng-options="template.id for template in templates" class="form-control selectpicker" required></select>
+				  <span class="help-block"> 
+					<div ng-show="newGameForm.$submitted || newGameForm.template.$touched">
+					  <div ng-show="newGameForm.template.$error.required" class="message error">You need to select a template.</div>
+					</div>
+				  </span>
+				</div>
+			  </div>
+
+			  <div class="form-group">
+				<label for="minPlayers" class="col-lg-3 control-label">Minimal amount of players</label>
+				<div class="col-lg-9">
+				  <input type="number" name="minPlayers" ng-model="game.minPlayers" min="1" max="50" class="form-control" required />
+				  <span class="help-block">
+					<div ng-show="newGameForm.$submitted || newGameForm.minPlayers.$touched">
+					  <div ng-show="newGameForm.minPlayers.$error.required" class="message error">You need to enter a minimal amount of players.</div>
+					  <div ng-show="newGameForm.minPlayers.$error.number" class="message error">You need to enter a valid number.</div>
+					  <div ng-show="newGameForm.minPlayers.$error.min" class="message error">The minimal amount of players needs to be at least 1.</div>
+					  <div ng-show="newGameForm.minPlayers.$error.max" class="message error">the maximal amount of players can't be higher than 35.</div>
+				  <div ng-show="game.minPlayers > game.maxPlayers" class="message error">The minimal amount of players can't be higher than the maximal amount of players.</div>
+					</div>
+				  </span>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label for="maxPlayers" class="col-lg-3 control-label">Maximal amount of players</label>
+				<div class="col-lg-9">
+				  <input type="number" name="maxPlayers" ng-model="game.maxPlayers" min="1" max="50" class="form-control" required />
+				  <span class="help-block">
+					<div ng-show="newGameForm.$submitted || newGameForm.maxPlayers.$touched">
+					  <div ng-show="newGameForm.maxPlayers.$error.required" class="message error">You need to enter a maximal amount of players.</div>
+					  <div ng-show="newGameForm.maxPlayers.$error.number" class="message error">You need to enter a valid number.</div>
+					  <div ng-show="newGameForm.maxPlayers.$error.min" class="message error">The minimal amount of players needs to be at least 1.</div>
+					  <div ng-show="newGameForm.maxPlayers.$error.max" class="message error">The maximal amount of players can't be higher than 35.</div>
+					  <div ng-show="game.minPlayers > game.maxPlayers" class="message error">The minimal amount of players can't be higher than the maximal amount of players.</div>
+					</div>
+				  </span>
+				</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary pull-right" ng-click="createNewGame()" style="margin-right: 15px;">Save</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

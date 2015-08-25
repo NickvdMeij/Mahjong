@@ -1,0 +1,36 @@
+<nav class="navbar navbar-inverse navbar-static">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand">Mahjong Mayhem</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+
+			<ul ng-show="mainCtrl.user.isLoggedIn()" class="nav navbar-nav">
+				<li><a ui-sref="main.games.open">Games</a></li>
+			</ul>
+
+			<ul ng-show="mainCtrl.user.isLoggedIn()" class="nav navbar-nav navbar-right">
+				<li><a ui-sref="main.logout">Log out</a></li>
+				<li class="navbar-text">{{mainCtrl.user.getEmail()}}</li>
+			</ul>
+
+			<ul ng-hide="mainCtrl.user.isLoggedIn()" class="nav navbar-nav navbar-right">
+				<li ng-click="mainCtrl.user.openLogin();"><a href="#">Login</a></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-repeat="layout in mainCtrl.styleLayouts"><a href="" ng-click="mainCtrl.updateStyleLayout(layout.url);">{{ layout.name }}</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div ui-view></div>
+</div>

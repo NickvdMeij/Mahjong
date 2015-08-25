@@ -1,0 +1,28 @@
+@mixin set-background ($path) {
+	background-image: url($path);
+	background-repeat: no-repeat;
+    background-size: #{$tile_width}px #{$tile_height*length($tiles)}px;
+}
+
+@mixin unselectable () {
+	/* unselectable */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@mixin assign-tiles () {
+	@each $tile in $tiles {
+	    $i: index($tiles, $tile);
+
+	    $selector: unquote('.#{$tile}');
+	    $position: if((abs($i)-1)==0, 0, -#{(abs($i)-1) * $tile_height});  
+
+	    #{$selector} {
+	      background-position-y: #{$position}px;
+	    }
+	}
+}

@@ -1,0 +1,23 @@
+<table class="table table-striped table-hover ">
+    <tr>
+        <td>Template name</td>
+        <td>Player nicknames</td>
+        <td>Min amount of players</td>
+        <td>Max amount of players</td>
+        <td>Created by</td>
+    </tr>
+    <tr ng-repeat="game in games">
+        <td>{{ game.gameTemplate._id }}</td>
+        <td>
+            <ul>
+                <li ng-repeat="gamePlayer in game.players"> {{ gamePlayer.name }} </li>
+            </ul>
+        </td>
+        <td>{{ game.minPlayers }}</td>
+        <td>{{ game.maxPlayers }}</td>
+        <td>{{ game.createdBy.name }}</td>
+        <td>
+            <button class="btn btn-primary" ng-click="toGame(game)">Go To Game</button>
+        </td>
+    </tr>
+</table>
